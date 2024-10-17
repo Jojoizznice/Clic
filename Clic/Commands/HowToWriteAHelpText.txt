@@ -1,0 +1,21 @@
+
+HOW TO WRITE A HELP TEXT
+
+
+1. USAGE PART
+
+[command] ([args]) args (args) [args] [args/sgra]
+
+args => this literal must be at this position
+(args) => this literal can be at this position
+[args] => this element should contain user input and must be at this position
+([args]) => this element can contain user input and can be at this position
+[args/sgra] => one of these elements sparated by / must be at this position
+
+2. DESCRIPTION
+
+Generally describe what your command does and what it is used for.
+
+3. SYNTAX DESCRIPTION
+
+Describe what every element of the usage part does
