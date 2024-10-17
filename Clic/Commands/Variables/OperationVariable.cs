@@ -25,7 +25,6 @@ internal class OperationVariable : Variable
             return oldValue;
         }
 
-        Console.WriteLine("calculated " + _operation.Replace("$", _var.Value.ToString()));
         Expression ex = new(_operation.Replace("$", _var.Value.ToString()));
         _hash++;
         _value = (_hash, ex.calculate());
