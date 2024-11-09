@@ -6,12 +6,27 @@ internal class OperationVariable : Variable
 {
     public override string Name { get; }
 
+    private readonly string _operation;
+    private readonly DoubleVariable _var;
+
+    private ulong _hash;
+    private (ulong oldHash, double cache)? _value;
+    private double oldValue;
+
+    bool ValueIsValid()
+    {
+        return
+            _value.HasValue &&
+            _value.Value.oldHash == _hash &&
+            oldValue == _var.Value;
+    }
+   
     public double Value {
         get
         {
-            if (_value.HasValue && _value.Value.oldHash == _hash)
+            if (ValueIsValid())
             {
-                return _value.Value.cache;
+                return _value! /* Checked in ValueIsValid() */ .Value.cache;
             }
 
             return RecalculateValue();
@@ -31,13 +46,6 @@ internal class OperationVariable : Variable
         oldValue = _var.Value;
         return _value.Value.cache;
     }
-
-    private readonly string _operation;
-    private readonly DoubleVariable _var;
-
-    private ulong _hash;
-    private (ulong oldHash, double cache)? _value;
-    private double oldValue;
 
     public OperationVariable(string name, DoubleVariable var, string operation) : base(true)
     {
