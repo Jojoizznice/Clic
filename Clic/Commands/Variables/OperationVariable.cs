@@ -61,4 +61,6 @@ internal class OperationVariable : Variable
     }
 
     public override int GetVariableType() => 3;
+
+    public string GetOperation() => _operation;
 }

@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Runtime.CompilerServices;
 using ConsoleTables;
 
@@ -239,6 +240,61 @@ class SetOp : CommandBase
     public override string GetHelpText()
     {
         throw new NotImplementedException();
+    }
+
+    public override void Setup()
+    {
+        
+    }
+}
+
+internal class Getop : CommandBase
+{
+    public override string Name => "getop";
+
+    public override Task<CommandReturnValue> CommandInvoked(string[] args, CommandArguments ca)
+    {
+        if (args.Length != 1)
+        {
+            ca.TextProvider.WriteError("No unique variable name given");
+            return Task.FromResult(new CommandReturnValue(-1));
+        }
+
+        Variable? v = ca.VariableHolder.FindName(args[0]);
+        if (v == null)
+        {
+            ca.TextProvider.WriteError($"""{args[0]} existiert nicht""");
+            return Task.FromResult(new CommandReturnValue(-1));
+        }
+
+        if (v.GetVariableType() != 3)
+        {
+            ca.TextProvider.WriteError($"""{args[0]} is no operation variable""");
+            return Task.FromResult(new CommandReturnValue(-1));
+        }
+
+        string type = v.GetType().ToString() // man nehme den typ als string
+            .Split('.').Last()               // entfernt namespaces
+            .Replace("Variable", null)       // nur den tatsächlichen typ
+            .ToLower();                      // klein
+
+        ca.TextProvider.WriteLine($"""Name: {v.Name}; Typ: {type}; Value: {v.GetValueString()}; is immutable; Operation: "{(v as OperationVariable)!.GetOperation()}" """);
+
+        return Task.FromResult(new CommandReturnValue(0));
+    }
+
+    public override string GetHelpText()
+    {
+        return """
+                        
+            1. USAGE        
+
+                getop [opvar]
+
+            2.DESCRIPTION
+
+                Prints information about the operation variable.
+""";
     }
 
     public override void Setup()
