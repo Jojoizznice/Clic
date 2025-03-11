@@ -1,5 +1,4 @@
 ﻿using Clic.Commands.Variables;
-using org.mariuszgromada.math.mxparser;
 
 namespace Clic;
 
@@ -26,7 +25,6 @@ internal class CLIc
 
     public async Task StartConsole()
     {
-        License.iConfirmNonCommercialUse("J Riedmayer");
         _textProvider.WriteLine(banner + "\n");
     
     Go:

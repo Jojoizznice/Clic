@@ -1,11 +1,14 @@
-﻿namespace Clic;
+﻿using org.mariuszgromada.math.mxparser;
+
+namespace Clic;
 
 internal class Program
 {
     static async Task Main(string[] args)
     {
         _testfile.Test();
-        
+        License.iConfirmNonCommercialUse("J Riedmayer");
+
         try
         {
             var clic = new CLIc(new());
