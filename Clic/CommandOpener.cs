@@ -190,9 +190,14 @@ internal class CommandOpener
         {
             if (chars.Length == 0) break;
 
-            index = text.IndexOf('$');
-            chars = chars[index..];
+            index = chars.IndexOf('$');
+            if (index < 0)
+            {
+                sb.Append(chars);
+                return sb.ToString();
+            }
             sb.Append(chars[..index]);
+            chars = chars[index..];
 
             index = chars.IndexOf(' ') < 0 ? chars.Length - 1 : chars.IndexOf(' '); // avoid variables with no end (omg)
             ReadOnlySpan<char> varName = chars[1..(index + 1)]; // remove dollar

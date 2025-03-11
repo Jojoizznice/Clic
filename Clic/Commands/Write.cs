@@ -41,3 +41,37 @@ internal class Write : CommandBase
         
     }
 }
+
+internal class Cls : CommandBase
+{
+    public override string Name => "cls";
+    public override string[] Aliases { get; set; } = [
+        "cl",
+        ];
+
+    public override Task<CommandReturnValue> CommandInvoked(string[] args, CommandArguments folder)
+    {
+        Console.Clear();
+        return Task.FromResult(new CommandReturnValue(0));
+    }
+
+    public override string GetHelpText()
+    {
+        return
+            """
+            1. USAGE
+
+                cls
+
+            2. DESCRIPTION
+
+                Clears the console
+
+            """;
+    }
+
+    public override void Setup()
+    {
+
+    }
+}
